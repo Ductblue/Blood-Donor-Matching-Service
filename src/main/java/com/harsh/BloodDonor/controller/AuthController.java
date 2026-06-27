@@ -7,6 +7,7 @@ import com.harsh.BloodDonor.model.User;
 import com.harsh.BloodDonor.repository.UserRepo;
 import com.harsh.BloodDonor.security.JwtUtil;
 import com.harsh.BloodDonor.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,19 +36,19 @@ public class AuthController {
     }
 
     @PostMapping("/register/donor")
-    public ResponseEntity<String> registerDonor(@RequestBody DonorRegistrationDto donorDto){
+    public ResponseEntity<String> registerDonor(@Valid @RequestBody DonorRegistrationDto donorDto){
         String result = userService.registerDonor(donorDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PostMapping("/register/hospital")
-    public ResponseEntity<String> registerHospital(@RequestBody HospitalRegistrationDto hospitalDto){
+    public ResponseEntity<String> registerHospital(@Valid @RequestBody HospitalRegistrationDto hospitalDto){
         String result = userService.registerHospital(hospitalDto);
         return new ResponseEntity<>(result,HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequestDto authRequestDto){
+    public ResponseEntity<String> login(@Valid @RequestBody AuthRequestDto authRequestDto){
         User user=userRepo.findByEmail(authRequestDto.getEmail()).orElseThrow(
                 ()->new RuntimeException("Wrong Email")
         );

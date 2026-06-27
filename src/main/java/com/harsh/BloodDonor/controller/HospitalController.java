@@ -3,6 +3,7 @@ package com.harsh.BloodDonor.controller;
 import com.harsh.BloodDonor.dto.BloodRequestDto;
 import com.harsh.BloodDonor.model.DonorProfile;
 import com.harsh.BloodDonor.service.MatchingService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class HospitalController {
     }
 
     @PostMapping("/requests")
-    public ResponseEntity<List<DonorProfile>> createBloodRequest(@RequestBody BloodRequestDto bloodRequestDto){
+    public ResponseEntity<List<DonorProfile>> createBloodRequest(@Valid @RequestBody BloodRequestDto bloodRequestDto){
         List<DonorProfile> donorProfiles=matchingService.createRequestAndFindMatches(
                 bloodRequestDto.getHospitalUserId(),
                 bloodRequestDto.getBloodGroupNeeded(),
